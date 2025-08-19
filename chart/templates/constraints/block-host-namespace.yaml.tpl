@@ -1,13 +1,16 @@
-{{- if .Values.enabled }}{{- if .Values.hostNamespace.enabled }}
-{{- $namespaces := .Values.hostNamespace.namespaces | default (list) }}
+{{- if .Values.enabled }}{{- if .Values.blockHostNamespace.enabled }}
+{{- $namespaces := .Values.blockHostNamespace.namespaces | default (list) }}
 {{- $namespaces = concat $namespaces .Values.global.namespaces }}
-{{- $excludedNamespaces := .Values.hostNamespace.excludedNamespaces | default (list) }}
+{{- $excludedNamespaces := .Values.blockHostNamespace.excludedNamespaces | default (list) }}
 {{- $excludedNamespaces = concat $excludedNamespaces .Values.global.excludedNamespaces }}
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPHostNamespace
 metadata:
   name: psp-host-namespace
 spec:
+  {{- if .Values.blockHostNamespace.dryRun }}
+  enforcementAction: warn
+  {{- end }}
   match:
     kinds:
       - apiGroups: [""]

@@ -5,7 +5,7 @@
 {{- $excludedNamespaces = concat $excludedNamespaces .Values.global.excludedNamespaces }}
 {{- $tags := .Values.disallowedTags.tags | default (list) }}
 {{- $exemptImages := .Values.disallowedTags.exemptImages | default (list) }}
-{{- if not (empty $tags) | not (empty $exemptImages) }}
+{{- if not (empty $tags) }}
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowedTags
 metadata:

@@ -5,7 +5,6 @@
 {{- $excludedNamespaces = concat $excludedNamespaces .Values.global.excludedNamespaces }}
 {{- $tags := .Values.blockLatestImageTag.tags | default (list) }}
 {{- $exemptImages := .Values.blockLatestImageTag.exemptImages | default (list) }}
-{{- if not (empty $tags) | not (empty $exemptImages) }}
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowedTags
 metadata:
@@ -39,5 +38,4 @@ spec:
       - {{ . | quote }}
       {{- end }}
     {{- end }}
-{{- end }}
 {{- end }}{{- end }}

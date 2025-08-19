@@ -5,7 +5,6 @@
 {{- $excludedNamespaces = concat $excludedNamespaces .Values.global.excludedNamespaces }}
 {{- $allowedRoles := .Values.noAnonymousRoleBindings.allowedRoles | default (list) }}
 {{- $allowedClusterRoles := .Values.noAnonymousRoleBindings.allowedClusterRoles | default (list) }}
-{{- if not (empty $allowedRoles) | not (empty $allowedClusterRoles) }}
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowAnonymous
 metadata:
@@ -45,5 +44,4 @@ spec:
       - {{ . | quote }}
       {{- end }}
     {{- end }}
-{{- end }}
 {{- end }}{{- end }}
