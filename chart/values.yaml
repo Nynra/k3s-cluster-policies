@@ -172,7 +172,7 @@ horizontalPodAutoscaler:
 
 # Values to pass to the Gatekeeper Helm chart.
 gatekeeper:
-  enabled: false
+  enabled: true
   replicas: 1
   auditInterval: 60
   metricsBackends: ["prometheus"]
