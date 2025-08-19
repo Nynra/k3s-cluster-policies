@@ -143,7 +143,7 @@ disallowedRepos:
 # Block certain tags for images, by default this will block the "latest" tag and 
 # only warn if the image is not using a tag.
 disallowedTags:
-  enabled: true
+  enabled: false
   dryRun: false
   namespaces: []
   excludedNamespaces: []
@@ -154,7 +154,7 @@ disallowedTags:
 # Enforce horizontal pod autoscaling for deployments. This is useful to prevent
 # deployments from overloading the cluster with too many replicas.
 horizontalPodAutoscaler:
-  enabled: true
+  enabled: false
   dryRun: false
   namespaces: []
   excludedNamespaces: []
