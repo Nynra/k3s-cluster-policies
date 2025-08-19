@@ -151,12 +151,6 @@ disallowedTags:
     - "latest"
   exemptImages: []
 
-disruptionBudget:
-  enabled: true
-  dryRun: false
-  namespaces: []
-  excludedNamespaces: []
-
 # Enforce horizontal pod autoscaling for deployments. This is useful to prevent
 # deployments from overloading the cluster with too many replicas.
 horizontalPodAutoscaler:
