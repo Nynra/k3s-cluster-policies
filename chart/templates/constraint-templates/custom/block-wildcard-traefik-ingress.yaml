@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sblockwildcardtraefikingress
+  annotations:
+    metadata.gatekeeper.sh/title: "Block Wildcard Traefik Ingress"
+    metadata.gatekeeper.sh/version: 1.0.1
+    description: >-
+      Users should not be able to create Traefik Ingresses with a blank or wildcard (*) hostname since that would enable them to intercept traffic for other services in the cluster, even if they don't have access to those services.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sBlockWildcardTraefikIngress
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package K8sBlockWildcardTraefikIngress
+
+        contains_wildcard(hostname) = true {
+          hostname == ""
+        }
+
+        contains_wildcard(hostname) = true {
+          contains(hostname, "*")
+        }
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "IngressRoute"
+          # object.get is required to detect omitted host fields
+          hostname := object.get(input.review.object.spec.routes[_], "match", "")
+          contains_wildcard(hostname)
+          msg := sprintf("Hostname '%v' is not allowed since it counts as a wildcard, which can be used to intercept traffic from other applications.", [hostname])
+        }

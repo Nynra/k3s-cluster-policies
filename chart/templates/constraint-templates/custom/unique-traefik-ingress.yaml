@@ -1,0 +1,47 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8suniquetraefikingresshost
+  annotations:
+    metadata.gatekeeper.sh/title: "Unique Traefik Ingress Host"
+    metadata.gatekeeper.sh/version: 1.0.4
+    metadata.gatekeeper.sh/requires-sync-data: |
+      "[
+        [
+          {
+            "groups": ["traefik.io"],
+            "versions": ["v1alpha1", "v1"],
+            "kinds": ["IngressRoute"]
+          }
+        ]
+      ]"
+    description: >-
+      Requires all Traefik Ingress rule hosts to be unique.
+
+      Does not handle hostname wildcards:
+      https://kubernetes.io/docs/concepts/services-networking/ingress/
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sUniqueTraefikIngressHost
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8suniquetraefikingresshost
+
+        identical(obj, review) {
+          obj.metadata.namespace == review.object.metadata.namespace
+          obj.metadata.name == review.object.metadata.name
+        }
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "IngressRoute"
+          regex.match("^(traefik.io)$", input.review.kind.group)
+          host := input.review.object.spec.routes[_].match
+          other := data.inventory.namespace[_][otherapiversion]["IngressRoute"][name]
+          regex.match("^(traefik.io)/.+$", otherapiversion)
+          other.spec.routes[_].match == host
+          not identical(other, input.review)
+          msg := sprintf("ingress host conflicts with an existing ingress <%v>", [host])
+        }

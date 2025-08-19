@@ -1,0 +1,10 @@
+apiVersion: v2
+name: k3s-cluster-policies
+description: A Helm chart that deploys cluster policies for a K3s cluster.
+type: application
+version: 0.0.1
+dependencies:
+- name: gatekeeper
+  version: 3.20.0
+  repository: https://open-policy-agent.github.io/gatekeeper/charts
+  condition: gatekeeper.enabled
