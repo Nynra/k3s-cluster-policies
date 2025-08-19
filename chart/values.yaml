@@ -192,3 +192,14 @@ gatekeeper:
   admissionEventsInvolvedNamespace: false
   auditEventsInvolvedNamespace: false
   resourceQuota: true
+
+  # Needed for installing on k3s clusters
+  postInstall:
+    labelNamespace:
+      extraRules:
+      - apiGroups:
+        - management.cattle.io
+        resources:
+        - projects
+        verbs:
+        - updatepsa
