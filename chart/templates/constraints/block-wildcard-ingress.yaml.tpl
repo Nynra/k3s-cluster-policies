@@ -1,6 +1,6 @@
 {{- if .Values.enabled }}{{- if .Values.ingress.blockWildcardIngress.enabled }}
 {{- $namespaces := .Values.ingress.blockWildcardIngress.namespaces | default (list) }}
-{{- $namespaces := concat $namespace .Values.global.namespaces }}
+{{- $namespaces := concat $namespaces .Values.global.namespaces }}
 {{- $excludedNamespaces := .Values.ingress.blockWildcardIngress.excludedNamespaces | default (list) }}
 {{- $excludedNamespaces := concat $excludedNamespaces .Values.global.excludedNamespaces }}
 apiVersion: constraints.gatekeeper.sh/v1beta1
