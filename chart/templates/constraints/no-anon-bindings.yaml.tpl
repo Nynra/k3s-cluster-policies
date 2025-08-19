@@ -9,6 +9,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowAnonymous
 metadata:
   name: no-anonymous
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.allowedRepos.dryRun }}
   enforcementAction: warn

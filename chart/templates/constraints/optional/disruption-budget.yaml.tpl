@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPodDisruptionBudget
 metadata:
   name: pod-disruption-budget
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.disruptionBudget.dryRun }}
   enforcementAction: warn

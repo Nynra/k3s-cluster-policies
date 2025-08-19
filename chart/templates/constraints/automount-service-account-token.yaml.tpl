@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPAutomountServiceAccountTokenPod
 metadata:
   name: psp-automount-serviceaccount-token-pod
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.automountServiceAccountToken.dryRun }}
   enforcementAction: warn

@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sBlockNodePort
 metadata:
   name: block-node-port
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.blockNodePorts.dryRun }}
   enforcementAction: warn

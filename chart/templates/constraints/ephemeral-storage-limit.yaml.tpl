@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sContainerEphemeralStorageLimit
 metadata:
   name: container-ephemeral-storage-limit
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.allowedRepos.dryRun }}
   enforcementAction: warn

@@ -9,6 +9,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowedTags
 metadata:
   name: container-image-must-not-have-latest-tag
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.blockLatestImageTag.dryRun }}
   enforcementAction: warn

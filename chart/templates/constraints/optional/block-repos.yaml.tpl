@@ -9,6 +9,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sDisallowedRepos
 metadata:
   name: repo-must-not-be-k8s-gcr-io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.disallowedRepos.dryRun }}
   enforcementAction: warn

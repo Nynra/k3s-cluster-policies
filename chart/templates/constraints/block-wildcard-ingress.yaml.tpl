@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sBlockWildcardIngress
 metadata:
   name: block-wildcard-ingress
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.ingress.blockWildcardIngress.dryRun }}
   enforcementAction: warn

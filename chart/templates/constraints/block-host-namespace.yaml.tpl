@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPHostNamespace
 metadata:
   name: psp-host-namespace
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.blockHostNamespace.dryRun }}
   enforcementAction: warn

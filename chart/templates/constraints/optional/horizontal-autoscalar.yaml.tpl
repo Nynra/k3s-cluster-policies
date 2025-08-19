@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sHorizontalPodAutoscaler
 metadata:
   name: horizontal-pod-autoscaler
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.allowedRepos.dryRun }}
   enforcementAction: warn

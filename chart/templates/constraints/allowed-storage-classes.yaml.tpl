@@ -9,6 +9,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sStorageClass
 metadata:
   name: allowed-storageclass
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.allowedStorageClasses.dryRun }}
   enforcementAction: warn

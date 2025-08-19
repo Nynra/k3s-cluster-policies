@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sUniqueTraefikIngressHost
 metadata:
   name: unique-traefik-ingress-host
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.ingress.enforceUniqueHosts.dryRun }}
   enforcementAction: warn

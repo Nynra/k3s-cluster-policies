@@ -7,6 +7,8 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sBlockLoadBalancer
 metadata:
   name: block-load-balancer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   {{- if .Values.blockLoadBalancerServices.dryRun }}
   enforcementAction: warn
