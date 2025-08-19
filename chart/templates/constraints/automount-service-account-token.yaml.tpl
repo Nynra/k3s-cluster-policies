@@ -1,4 +1,4 @@
-{{- .Values.enabled }}{{- if .Values.automountServiceAccountToken.enabled }}
+{{- if .Values.enabled }}{{- if .Values.automountServiceAccountToken.enabled }}
 {{- $namespaces := .Values.automountServiceAccountToken.namespaces | default (list) }}
 {{- $namespaces := concat $namespaces .Values.global.namespaces }}
 {{- $excludedNamespaces := .Values.automountServiceAccountToken.excludedNamespaces | default (list) }}
